@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Repository.Interface;
 using Repository.Models;
 
-namespace ProjectStudy.Controllers;
+namespace Business.Api.Controllers;
 
 public class ProductController : ControllerBase
 {

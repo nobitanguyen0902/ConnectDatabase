@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConnectDatabase", "ConnectDatabase\ConnectDatabase.csproj", "{17EAF968-39EE-4BC2-AAC5-F3C328A2042D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business.Api", "Business.Api\Business.Api.csproj", "{17EAF968-39EE-4BC2-AAC5-F3C328A2042D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{8CF91FBD-1A9D-4F30-9702-F9D80743ACE7}"
 EndProject
