@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "ConnectDatabase": {
+    "Business.Api": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
