@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+#  redis:
+#    image: redis:7.2.3-alpine
+#    restart: always
+#    ports:
+#      - "6379:6379"
+  elastic:
+    image: nobitanguyen0902/mybusiness:8.11.0
+    restart: always
+    ports:
+      - 9200:9200

@@ -1,0 +1,621 @@
+DELETE http://localhost:9200/user
+###
+PUT http://localhost:9200/user?pretty
+Content-Type: application/json
+
+{
+  "aliases": {},
+  "mappings": {
+    "dynamic": "false",
+    "_source": {
+      "enabled": true
+    },
+    "_routing": {
+      "required": true
+    },
+    "properties": {
+      "id": {
+        "type": "text",
+        "analyzer": "index_keyword"
+      },
+      "firstName": {
+        "type": "text",
+        "fields": {
+          "sort": {
+            "type": "text",
+            "analyzer": "index_keyword"
+          }
+        },
+        "analyzer": "index_edgengram_2_255"
+      },
+      "lastName": {
+        "type": "text",
+        "fields": {
+          "sort": {
+            "type": "text",
+            "analyzer": "index_keyword"
+          }
+        },
+        "analyzer": "index_edgengram_2_255"
+      },
+      "name": {
+        "type": "text",
+        "fields": {
+          "sort": {
+            "type": "text",
+            "analyzer": "index_keyword"
+          }
+        },
+        "analyzer": "index_edgengram_2_255"
+      },
+      "email": {
+        "type": "text",
+        "fields": {
+          "sort": {
+            "type": "text",
+            "analyzer": "index_keyword"
+          }
+        },
+        "analyzer": "index_edgengram_2_255"
+      },
+      "gender": {
+        "type": "integer"
+      },
+      "phoneNumbers": {
+        "type": "text",
+        "analyzer": "index_first_last_edgengram_3_20"
+      },
+      "updatedDate": {
+        "type": "date"
+      }
+    }
+  },
+  "settings": {
+    "index": {
+      "routing": {
+        "allocation": {
+          "include": {
+            "_tier_preference": "data_content"
+          },
+          "enable": "all"
+        }
+      },
+      "refresh_interval": "5s",
+      "number_of_shards": "12",
+      "max_result_window": "1000000",
+      "analysis": {
+        "filter": {
+          "first_edgengram_2_20": {
+            "type": "edge_ngram",
+            "min_gram": "2",
+            "max_gram": "20"
+          },
+          "edgengram_2_255": {
+            "type": "edge_ngram",
+            "min_gram": "2",
+            "max_gram": "255"
+          },
+          "edgengram_2_50": {
+            "type": "edge_ngram",
+            "min_gram": "2",
+            "max_gram": "50"
+          },
+          "edgengram_2_300": {
+            "type": "edge_ngram",
+            "min_gram": "2",
+            "max_gram": "300"
+          },
+          "edgengram_3_20": {
+            "type": "edge_ngram",
+            "min_gram": "3",
+            "max_gram": "20"
+          },
+          "edgengram_2_100": {
+            "type": "edge_ngram",
+            "min_gram": "2",
+            "max_gram": "100"
+          },
+          "last_edgengram_3_20": {
+            "min_gram": "3",
+            "side": "back",
+            "type": "edge_ngram",
+            "max_gram": "20"
+          },
+          "edgengram_1_20": {
+            "type": "edge_ngram",
+            "min_gram": "1",
+            "max_gram": "20"
+          },
+          "edgengram_2_10": {
+            "type": "edge_ngram",
+            "min_gram": "2",
+            "max_gram": "10"
+          },
+          "edgengram_2_20": {
+            "type": "edge_ngram",
+            "min_gram": "2",
+            "max_gram": "20"
+          }
+        },
+        "analyzer": {
+          "index_first_last_edgengram_3_20": {
+            "filter": [
+              "lowercase",
+              "asciifolding",
+              "last_edgengram_3_20",
+              "first_edgengram_2_20"
+            ],
+            "tokenizer": "standard"
+          },
+          "index_edgengram_1_20": {
+            "filter": [
+              "lowercase",
+              "asciifolding",
+              "edgengram_1_20"
+            ],
+            "tokenizer": "whitespace"
+          },
+          "index_edgengram_2_10": {
+            "filter": [
+              "lowercase",
+              "asciifolding",
+              "edgengram_2_10"
+            ],
+            "tokenizer": "whitespace"
+          },
+          "index_keyword": {
+            "filter": [
+              "lowercase",
+              "asciifolding"
+            ],
+            "tokenizer": "keyword"
+          },
+          "index_edgengram_front2_50_reverse_2_10": {
+            "filter": [
+              "lowercase",
+              "asciifolding",
+              "edgengram_2_50",
+              "reverse",
+              "edgengram_2_10",
+              "reverse"
+            ],
+            "tokenizer": "whitespace"
+          },
+          "search_whitespace": {
+            "filter": [
+              "lowercase",
+              "asciifolding"
+            ],
+            "tokenizer": "whitespace"
+          },
+          "search_standard": {
+            "filter": [
+              "lowercase",
+              "asciifolding"
+            ],
+            "tokenizer": "standard"
+          },
+          "index_edgengram_reverse_2_20": {
+            "filter": [
+              "lowercase",
+              "asciifolding",
+              "reverse",
+              "edgengram_2_20",
+              "reverse"
+            ],
+            "tokenizer": "whitespace"
+          },
+          "index_edgengram_2_300": {
+            "filter": [
+              "lowercase",
+              "asciifolding",
+              "edgengram_2_300"
+            ],
+            "tokenizer": "whitespace"
+          },
+          "index_edgengram_reverse_2_10": {
+            "filter": [
+              "lowercase",
+              "asciifolding",
+              "reverse",
+              "edgengram_2_10",
+              "reverse"
+            ],
+            "tokenizer": "whitespace"
+          },
+          "index_edgengram_2_255": {
+            "filter": [
+              "lowercase",
+              "asciifolding",
+              "edgengram_2_255"
+            ],
+            "tokenizer": "whitespace"
+          },
+          "index_edgengram_2_100": {
+            "filter": [
+              "lowercase",
+              "asciifolding",
+              "edgengram_2_100"
+            ],
+            "tokenizer": "whitespace"
+          },
+          "index_edgengram_front2_20_reverse_2_20": {
+            "filter": [
+              "lowercase",
+              "asciifolding",
+              "edgengram_2_20",
+              "reverse",
+              "edgengram_2_20",
+              "reverse"
+            ],
+            "tokenizer": "whitespace"
+          },
+          "index_last_edgengram_3_20": {
+            "filter": [
+              "lowercase",
+              "asciifolding",
+              "last_edgengram_3_20"
+            ],
+            "tokenizer": "standard"
+          },
+          "index_edgengram_2_50": {
+            "filter": [
+              "lowercase",
+              "asciifolding",
+              "edgengram_2_50"
+            ],
+            "tokenizer": "whitespace"
+          },
+          "index_standard": {
+            "filter": [
+              "lowercase",
+              "asciifolding"
+            ],
+            "tokenizer": "standard"
+          },
+          "index_edgengram_2_20": {
+            "filter": [
+              "lowercase",
+              "asciifolding",
+              "edgengram_2_20"
+            ],
+            "tokenizer": "whitespace"
+          },
+          "index_edgengram_front3_20_reverse_3_20": {
+            "filter": [
+              "lowercase",
+              "asciifolding",
+              "edgengram_3_20",
+              "reverse",
+              "edgengram_3_20",
+              "reverse"
+            ],
+            "tokenizer": "whitespace"
+          },
+          "index_whitespace": {
+            "filter": [
+              "lowercase",
+              "asciifolding"
+            ],
+            "tokenizer": "whitespace"
+          }
+        }
+      },
+      "number_of_replicas": "1"
+    }
+  }
+}
+###
+PUT http://localhost:9200/participant/_setting?pretty
+Content-Type: application/json
+
+{
+  "index": {
+    "refresh_interval": "3s"
+  }
+}
+
+
+###
+POST http://localhost:9200/user/_doc/651e5ed66cf0ad544a015ec4?routing=110085093698461&pretty
+Content-Type: application/json
+
+{
+  "recipientId": "5723188811099143",
+  "email": "5723188811099143@facebook.com",
+  "name": "Huy Th\u1eafng",
+  "nickName": null,
+  "locale": null,
+  "timezone": 0,
+  "participantOrderCount": null,
+  "inboxConversationId": "63841b44e65eb84e548622cf",
+  "funnelRefIds": [
+    "1_470_ref_2035"
+  ],
+  "birthday": null,
+  "customFields": [],
+  "recipientCustomLabels": null,
+  "haravanCustomerPhoneNumber": "0967891223",
+  "haravanCustomerAddress": "",
+  "haravanCustomerCountryId": 241,
+  "haravanCustomerCountryName": "Vietnam",
+  "haravanCustomerCountryCode": "vn",
+  "haravanCustomerProvinceId": null,
+  "haravanCustomerProvinceName": null,
+  "haravanCustomerProvinceCode": null,
+  "haravanCustomerDistrictId": null,
+  "haravanCustomerDistrictName": null,
+  "haravanCustomerDistrictCode": null,
+  "haravanCustomerWardId": null,
+  "haravanCustomerWardName": null,
+  "haravanCustomerWardCode": null,
+  "haravanCustomerId": "1041216231",
+  "haravanCustomerEmail": "7874573432584847@facebook.com",
+  "haravanCustomerName": "Huy Th\u1eafng",
+  "phoneNumbers": [
+    "0967891223",
+    "967891223",
+    "84967891223",
+    "0967891234",
+    "967891234",
+    "84967891234",
+    "0968798351",
+    "968798351",
+    "84968798351",
+    "0968798121",
+    "968798121",
+    "84968798121",
+    "0354144660",
+    "354144660",
+    "84354144660",
+    "0967891223",
+    "967891223",
+    "84967891223"
+  ],
+  "funnelTags": [],
+  "firstName": "Huy",
+  "lastName": "Th\u1eafng",
+  "gender": 1,
+  "sequences": [
+    2720
+  ],
+  "lastInteractionDate": "2024-01-05T08:09:03.845Z",
+  "growthToolIdOptin": null,
+  "isSubscribed": true,
+  "timePause": "2023-11-16T02:48:23.648Z",
+  "groupIds": null,
+  "updatedDate": "2024-01-17T02:56:53.043Z",
+  "orgContextId": 200000007431,
+  "isFromInitCrawl": false,
+  "hasInbox": true,
+  "hrfTags": null,
+  "oneTimeNotificationTopics": null,
+  "notificationMessageTopics": null,
+  "refTrackingUserName": null,
+  "refTrackingUserId": null,
+  "refTrackingAccount": null,
+  "refTrackingAccountId": null,
+  "refTrackingLastSource": null,
+  "refTrackingLastPageSource": null,
+  "refTrackingUtmSource": null,
+  "refTrackingUtmMedium": null,
+  "refTrackingUtmCampaign": null,
+  "socialAdIds": null,
+  "id": "651e5ed66cf0ad544a015ec4",
+  "pageId": "110085093698461",
+  "socialId": "5723188811099143",
+  "channelId": 1,
+  "createdDate": "2023-10-05T06:59:34.15Z"
+}
+###
+POST http://localhost:9200/user/_doc/651e5ed66cf0ad544a015ec5?routing=110085093698461&pretty
+Content-Type: application/json
+
+{
+  "recipientId": "5723188811099143",
+  "email": "5723188811099143@facebook.com",
+  "name": "Huy Th\u1eafng",
+  "nickName": null,
+  "locale": null,
+  "timezone": 0,
+  "participantOrderCount": null,
+  "inboxConversationId": "63841b44e65eb84e548622cf",
+  "funnelRefIds": [
+    "1_470_ref_2035"
+  ],
+  "birthday": null,
+  "customFields": [],
+  "recipientCustomLabels": null,
+  "haravanCustomerPhoneNumber": "0967891223",
+  "haravanCustomerAddress": "",
+  "haravanCustomerCountryId": 241,
+  "haravanCustomerCountryName": "Vietnam",
+  "haravanCustomerCountryCode": "vn",
+  "haravanCustomerProvinceId": null,
+  "haravanCustomerProvinceName": null,
+  "haravanCustomerProvinceCode": null,
+  "haravanCustomerDistrictId": null,
+  "haravanCustomerDistrictName": null,
+  "haravanCustomerDistrictCode": null,
+  "haravanCustomerWardId": null,
+  "haravanCustomerWardName": null,
+  "haravanCustomerWardCode": null,
+  "haravanCustomerId": "1041216231",
+  "haravanCustomerEmail": "7874573432584847@facebook.com",
+  "haravanCustomerName": "Huy Th\u1eafng",
+  "phoneNumbers": [
+    "0967891223",
+    "967891223",
+    "84967891223",
+    "0967891234",
+    "967891234",
+    "84967891234",
+    "0968798351",
+    "968798351",
+    "84968798351",
+    "0968798121",
+    "968798121",
+    "84968798121",
+    "0354144660",
+    "354144660",
+    "84354144660",
+    "0967891223",
+    "967891223",
+    "84967891223"
+  ],
+  "funnelTags": [],
+  "firstName": "Huy",
+  "lastName": "Th\u1eafng",
+  "gender": 1,
+  "sequences": [
+    2720
+  ],
+  "lastInteractionDate": "2024-01-05T08:09:03.845Z",
+  "growthToolIdOptin": null,
+  "isSubscribed": true,
+  "timePause": "2023-11-16T02:48:23.648Z",
+  "groupIds": null,
+  "updatedDate": "2024-01-17T02:56:53.043Z",
+  "orgContextId": 200000007431,
+  "isFromInitCrawl": false,
+  "hasInbox": true,
+  "hrfTags": null,
+  "oneTimeNotificationTopics": null,
+  "notificationMessageTopics": null,
+  "refTrackingUserName": null,
+  "refTrackingUserId": null,
+  "refTrackingAccount": null,
+  "refTrackingAccountId": null,
+  "refTrackingLastSource": null,
+  "refTrackingLastPageSource": null,
+  "refTrackingUtmSource": null,
+  "refTrackingUtmMedium": null,
+  "refTrackingUtmCampaign": null,
+  "socialAdIds": null,
+  "id": "651e5ed66cf0ad544a015ec5",
+  "pageId": "110085093698461",
+  "socialId": "5723188811099143",
+  "channelId": 1,
+  "createdDate": "2023-10-05T06:59:34.15Z"
+}
+###
+POST http://localhost:9200/user/_doc/651e5ed66cf0ad544a015ec6?routing=110085093698461&pretty
+Content-Type: application/json
+
+{
+  "recipientId": "5723188811099143",
+  "email": "5723188811099143@facebook.com",
+  "name": "Huy Th\u1eafng",
+  "nickName": null,
+  "locale": null,
+  "timezone": 0,
+  "participantOrderCount": null,
+  "inboxConversationId": "63841b44e65eb84e548622cf",
+  "funnelRefIds": [
+    "1_470_ref_2035"
+  ],
+  "birthday": null,
+  "customFields": [],
+  "recipientCustomLabels": null,
+  "haravanCustomerPhoneNumber": "0967891223",
+  "haravanCustomerAddress": "",
+  "haravanCustomerCountryId": 241,
+  "haravanCustomerCountryName": "Vietnam",
+  "haravanCustomerCountryCode": "vn",
+  "haravanCustomerProvinceId": null,
+  "haravanCustomerProvinceName": null,
+  "haravanCustomerProvinceCode": null,
+  "haravanCustomerDistrictId": null,
+  "haravanCustomerDistrictName": null,
+  "haravanCustomerDistrictCode": null,
+  "haravanCustomerWardId": null,
+  "haravanCustomerWardName": null,
+  "haravanCustomerWardCode": null,
+  "haravanCustomerId": "1041216231",
+  "haravanCustomerEmail": "7874573432584847@facebook.com",
+  "haravanCustomerName": "Huy Th\u1eafng",
+  "phoneNumbers": [
+    "0967891223",
+    "967891223",
+    "84967891223",
+    "0967891234",
+    "967891234",
+    "84967891234",
+    "0968798351",
+    "968798351",
+    "84968798351",
+    "0968798121",
+    "968798121",
+    "84968798121",
+    "0354144660",
+    "354144660",
+    "84354144660",
+    "0967891223",
+    "967891223",
+    "84967891223"
+  ],
+  "funnelTags": [],
+  "firstName": "Huy",
+  "lastName": "Th\u1eafng",
+  "gender": 1,
+  "sequences": [
+    2720
+  ],
+  "lastInteractionDate": "2024-01-05T08:09:03.845Z",
+  "growthToolIdOptin": null,
+  "isSubscribed": true,
+  "timePause": "2023-11-16T02:48:23.648Z",
+  "groupIds": null,
+  "updatedDate": "2024-01-17T02:56:53.043Z",
+  "orgContextId": 200000007431,
+  "isFromInitCrawl": false,
+  "hasInbox": true,
+  "hrfTags": null,
+  "oneTimeNotificationTopics": null,
+  "notificationMessageTopics": null,
+  "refTrackingUserName": null,
+  "refTrackingUserId": null,
+  "refTrackingAccount": null,
+  "refTrackingAccountId": null,
+  "refTrackingLastSource": null,
+  "refTrackingLastPageSource": null,
+  "refTrackingUtmSource": null,
+  "refTrackingUtmMedium": null,
+  "refTrackingUtmCampaign": null,
+  "socialAdIds": null,
+  "id": "651e5ed66cf0ad544a015ec6",
+  "pageId": "110085093698461",
+  "socialId": "5723188811099143",
+  "channelId": 1,
+  "createdDate": "2023-10-05T06:59:34.15Z"
+}
+###
+
+POST http://localhost:9200/participant/_search?routing=110085093698461&pretty
+Content-Type: application/json
+
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "query_string": {
+            "query": "6887",
+            "fields":["phoneNumbers"],
+            "minimum_should_match": "100%"
+          }
+        }
+      ],
+      "filter": [
+        {
+          "term": {
+            "pageId": "110085093698461"
+          }
+        }
+      ]
+    }
+  }
+}
+###
+
+
