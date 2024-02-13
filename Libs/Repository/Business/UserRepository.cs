@@ -10,9 +10,9 @@ public class UserRepository : IUserRepository
     private readonly IMongoCollection<UserModel> _collection;
     private const string CollectionName = "UserModel";
 
-    public UserRepository(IMongoDb db)
+    public UserRepository(IMongoDatabase db)
     {
-        _collection = db.db.GetCollection<UserModel>(CollectionName);
+        _collection = db.GetCollection<UserModel>(CollectionName);
     }
     
     public async Task InsertAsync(UserModel entity)
